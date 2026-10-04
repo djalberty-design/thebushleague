@@ -1,0 +1,64 @@
+# Bush League OS — coder plan
+
+Date: 2026-10-04. This file replaces `ORDER_AFTER_LEDGER.md`. Send this only. The brain stays off. The formula stays frozen. No result from a confirmation run, the week-5 file, or the roster check may tune the model.
+
+## Do not change
+
+`cardUsesBrain()` stays false. Weight file stays 0.60. B0, the trailing three-week Bush mean, is the only number that can start a player. B1 stays disabled. B2 and B3 stay shadow. 276 is not published. 176.8 stays labeled THIN, NOT A FORECAST and cannot move a trade letter. No red-zone join. No Judkins fit. No new feed. The Python replay file is frozen. Do not re-score it.
+
+## Sunday confirmation
+
+Today is Sunday. Before the first kickoff, confirm a freeze exists with the inactive list. If it does not, Monday's file is contaminated and must say so.
+
+Score in two passes. Do not treat Monday morning as the end of week 4.
+
+- Monday 6:00 AM ET: grade Sunday-only players from the stored weeks 1–3 projection. Own file. Mark CONFIRMATION — DOES NOT OPEN GATE. Do not write week-5 rows into it. Do not rewrite the 2025 research files.
+- Tuesday 6:00 AM ET, after Monday night and the stat correction: final week-4 actuals. Version the grade file. Do not overwrite the Monday file.
+
+Byes are left out of MAE. They are not scored as 0 in the error rows. The gate compares active players only. A player who does not play is a zero in the lineup, not a model miss.
+
+## Week-5 file and waivers
+
+The 461-row file from this morning is `W5_PRELOCK_DRAFT_2026-10-04`. Keep it. Do not overwrite it and do not lock it.
+
+Tuesday 12:00 PM ET: write `week-5-prelim` from the final week-4 pass. Waiver claims use this file. Price is the trailing average, that week's bye, and the posted spread and total if one exists. A missing line stays the average. A debut is NO TRAIL, projected 0, cannot start. Show him in a speculative bucket with no points and no rank above a priced player. He is not dropped off the board, and he is not given a fake score.
+
+Thursday 7:00 PM ET: lock Thursday players. Sunday 11:30 AM ET: append the inactive list for the early window. A lock freezes the prediction, the weight, and the time for that game. It does not freeze the player list. A later injury is a new status row. It does not edit the locked projection.
+
+Each lock stores timestamp, availability source, model version, scorer version, weight 0.60, row count, and a code hash. A partial write is refused. An edit after lock is refused. A player with three or fewer scored weeks is THIN SAMPLE. Nothing downstream may fill him with a population prior.
+
+## Trades
+
+The letter uses this week's starter delta only when every asset in the deal is active this week. If any asset is on bye, suppress that delta and mark CURRENT WEEK BYE CONFLICT — GRADE ON ACTIVE WEEKS ONLY. Do not treat a bye as a gain from trading an elite player away.
+
+A player with three or fewer scored weeks, including Maye, is THIN SAMPLE. No Accept. No Reject. The verdict is a coin-flip advisory. The 8 percent band does not override that. The thin-sample rule ends when the player has four scored weeks. It does not last all season.
+
+Regression test: removing 176.8 does not change the letter, the verdict, or the week line.
+
+## Rosters
+
+Do not run the flip metric. The eleventh TW Fantasy team is a blocker. Check ESPN league settings for `210326445` first. Then a duplicate from a rename or id change. Then an inactive or empty roster. Filter `status !== INACTIVE` and require a non-empty roster. If 11 teams remain and they all have matchups, the league is not 10. Say so.
+
+20 of 21 second-quarterback starts is one week of behavior, not a recipe. Re-count over the stored weeks before anyone uses it. Check that QB14 is not still a fallback. Replacement for a claim is the best free agent in that league. Ranks are per league.
+
+## Inactives
+
+On the stored lineups, count starts that scored under 3 and the reason. A pre-kickoff inactive, about 90 minutes out, with the next legal swap from B0, is a card feature. It uses ESPN status already on disk. It is not a new feed and it is not the brain.
+
+## Tests that must exist
+
+- `cardUsesBrain()` is false and the weight file is 0.60.
+- A write after lock is refused. A partial week-5 write is refused.
+- Removing 176.8 does not change the trade verdict.
+- A bye asset cannot raise the letter.
+- A NO TRAIL debut cannot start.
+- Every ledger row has a code hash.
+
+## Done when
+
+- Monday confirmation is its own file and does not open the gate.
+- Tuesday final includes Monday night.
+- Week-5 prelim exists by Tuesday noon. Thursday and Sunday locks are separate. The Sunday draft is preserved.
+- The trade letter ignores 176.8 and ignores a bye-week delta.
+- The eleventh team is explained. The flip metric has not run.
+- The formula is untouched.

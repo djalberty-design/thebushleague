@@ -1,0 +1,23 @@
+/** ESPN settings for 210326445, read 2026-10-04. The flip metric has not run. */
+export const ROSTER_AUDIT = {
+  leagueId: "210326445",
+  name: "TW Fantasy",
+  source: "ESPN mSettings, mTeam, and mMatchup. Not a model feed.",
+  sizeSetting: 11,
+  teamsJoined: 11,
+  isFull: true,
+  teamCount: 11,
+  inactiveTeams: 0,
+  emptyRosters: 0,
+  duplicateIds: 0,
+  duplicateNames: 0,
+  week4Bye: "Kittle Miss Sunshine",
+  week4MatchupTeamsLive: 11,
+  week4MatchupTeamsStored: 10,
+  storedGap: "The snapshot keeps two-team games only. The week-4 bye has no opponent, so the file showed 10 clubs.",
+  conclusion: "The league is not 10. Eleven teams remain after the inactive and empty filters, and the size setting is 11.",
+  flipRan: false,
+  secondQuarterback: "20 of 21 is the stored week-4 lineups only. Weeks 1–3 slots are not on disk, so they were not recounted and not invented. It is not a recipe.",
+  qb14ClaimFallback: false,
+  qb14StillOnVorSort: true,
+} as const;

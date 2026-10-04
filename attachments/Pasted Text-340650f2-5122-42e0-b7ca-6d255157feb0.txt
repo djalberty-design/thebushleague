@@ -1,0 +1,55 @@
+# Bush League OS — final implementation plan
+
+Date: 2026-10-04. This file replaces every earlier plan. Gemini, ChatGPT, and Claude reviewed the parity run. Where they disagreed, this file already picked. Do not reopen a settled rule.
+
+The site is an auditable desk. The trailing average is the only production model. The brain is a research object. It does not get a button because a number made someone uncomfortable, and it does not get a button because 0.15 missed a bar we then felt like lowering.
+
+## Production contract
+
+Bush League `1014874`, team Let Maye Cook. TW Fantasy `210326445`, team Utility Man. Same scorer, `scoreOffense` and `scoreDst`. No generic PPR rank. No kicker.
+
+The card number is B0, the mean of the last three pregame Bush weeks. Recent low and recent high are the lowest and highest of those weeks. Do not call them a floor, a ceiling, or a win chance. Gap under 1.5 is a coin-flip. Out, IR, bye, inactive score 0 and cannot start. No 2026 skill row is NO TRAIL and cannot start, be claimed, or be valued in a trade. Favorite uses recent low. Underdog uses recent high. Toss-up uses the mean. Those cut lines stay labeled heuristic.
+
+B1, Vegas scale on the trailing average, is DISABLED. It lost 6.31 to 6.19 on 2,076 rows. It is not a bar. It does not get another test unless a new hypothesis is written down before the run.
+
+B2, the brain, and B3, the 50/50 blend, are SHADOW. They cannot change a start, a claim, or a trade. The drawer does not show their points. Badges only: snap share, target share, goal-line share, team total versus his last three. Status line: BASELINE, brain disabled, validation failed.
+
+Provenance on every card: model version, weight version, freeze time. Missing freeze is STALE.
+
+## What the gate already proved
+
+Parity passed. The app projector matches `scripts/replay-2025.py` on 2,076 even-week rows, mean gap 2.6e-18, max 3.6e-15. Red-zone carries null and the 50-yard bonus at 0 came with that match. Do not join them now. That would be a second look.
+
+Even weeks: B0 6.19, B2 6.04, B3 5.98. Edge 0.15. Those weeks were used while the formula was being built, so 0.15 is not the headline. Odd weeks, scored once: error gap 0.099, week-block lower bound −0.024. Weeks 5 and 13 went the wrong way. The bars were 0.25 and a lower bound above zero. Both failed. Do not lower either bar. `usageLast3` stays 0.60. `cardUsesBrain()` stays false.
+
+1,026 rows differ from that player's own average by more than 1.5. Absolute error saved is 303 points, 0.15 a row. The +4,017 figure added both sides. It is not lineup value. Do not print it.
+
+## Rest of season
+
+The weekly card number is the production forecast. Maye is 13.6.
+
+176.8 is 13.6 times 13 games, bye week 11 at 0. It stays on the trade screen labeled THIN, NOT A FORECAST. It is arithmetic, not a validated season projection. Do not delete it and do not dress it up.
+
+The 0.30 / 0.70 shrink toward 24.5 would publish about 276. It stays off the card. 24.5 is the early-season starter mean, and a 56 percent jump from 13.6 is a claim, not a result. Before that number can be printed, split the odd-week quarterbacks into terciles by weeks 1–3 mean and compare the prediction to actual weeks 7–17, including games missed. If the bottom tercile lands near its prediction, print 276 with the range, labeled fit-sample. If it lands lower, do not print 276. Even weeks stay burned for this fit. A weight of games / (games + 7) is the form to keep if the tercile holds. It rises as weeks accumulate. It is not applied this week.
+
+FLEX and OP fill on raw expected points. A claim's replacement is the best free agent at that position. The 55 percent VOR factor stays off the slot. The 8 percent trade band stays a heuristic.
+
+## Forward test, the only path onto the card
+
+From week 5, write an immutable pre-kickoff ledger of B0 and B2 for every skill player on the 2026 slate, not just the two rosters. One row per player. No edit after lock. Score it Monday with `scoreOffense` / `scoreDst`.
+
+Decision metric, pre-registered: build synthetic 10-team rosters from that slate. Count a flip only when B2 and B0 order two players for the same slot more than 1.5 apart, under 2 RB, 3 WR, FLEX, OP. Report points per team-week, paired by week. Also report how often a flip happens. A MAE edge that does not change a lineup does not get a button.
+
+Kill rule, fixed now: at the end of week 10, pool the 2026 forward weeks with the odd-week result. If the week-block lower bound is still not above zero, retire the brain's card ambitions and stop spending build time on it. Do not wire a one-week rollback. That trap was already rejected. The week-10 rule is the kill.
+
+Sunday's already stored projection is scored Monday from weeks 1–3 only, one row per player. It confirms the path. It does not tune and it does not open the gate.
+
+## Done when
+
+- The card is B0. B2 and B3 are shadow. B1 is disabled. `cardUsesBrain()` is false.
+- Maye weekly is 13.6. 176.8 is labeled thin, not a forecast. 276 is not published.
+- The tercile table for the quarterback shrink is stored.
+- The week-5 ledger format exists, immutable, every skill player.
+- The synthetic-roster flip metric is specified in code and not yet used to open the gate.
+- The week-10 kill rule is written down where the grader can read it.
+- No new feed. No red-zone join. No Judkins fit. Weight file still 0.60.

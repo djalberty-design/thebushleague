@@ -1,0 +1,92 @@
+# Bush League OS — implementation plan
+
+Date: 2026-10-04. This file is the order. Gemini, ChatGPT, and Claude reviewed the same record. Where they disagreed, this file already picked. Do not implement a retired rule from `BUSH_LEAGUE_AUDIT.md`. The 0.02 weekly step and the one-week rollback are dead.
+
+Brain stays off the button. `cardUsesBrain()` stays false until the 2025 held-out replay says otherwise. No new feed before the Judkins print.
+
+## Leagues and scorer
+
+Bush League ESPN `1014874`, team Let Maye Cook. TW Fantasy ESPN `210326445`, team Utility Man. Same scorer: `scoreOffense` and `scoreDst` in `src/lib/fantasy/scoring.ts`. Do not convert a PPR rank. Roster slots, waivers, and playoffs come from ESPN per league.
+
+Pass: 0.05/yd, +0.10 completion, −0.10 incompletion, 4 PTD, +3 on a 50-yard PTD, 0.50 passing first down, −2 INT, −1 sack, +2 at 300, +4 at 400. Rush: 0.10/yd, 0.10/attempt, 6 TD, +3 on a 50-yard TD, 1 first down, +2 at 100, +4 at 200. Rec: 0.10/yd, 1 reception, 0.20/target, 6 TD, +3 on a 50-yard TD, 1 first down, +2 at 100, +4 at 200. Fumble lost −2. No kicker.
+
+## Status of every number
+
+LIVE means it can change a start, claim, or trade. BASELINE is the control. SHADOW is calculated and cannot decide. GATE is under test. DISABLED lost or was contaminated. MISSING has no feed. HEURISTIC is a human rule.
+
+- Trailing three-week Bush mean, B0: BASELINE. Number on the card.
+- Vegas scale, B1: SHADOW until the replay says it beats B0.
+- Brain, B2: GATE. On the button: DISABLED.
+- 50/50 blend of B0 and B2, B3: GATE. Pre-registered. Not on the card.
+- Routes: MISSING. Participation file 404. Do not invent them.
+- Corner and man/zone: DISABLED.
+- QB14 and the 55 percent weekly VOR factor: HEURISTIC. Not used to fill FLEX or OP.
+
+## Card
+
+B0 = mean of the last three pregame Bush weeks. Recent low = lowest of those weeks. Recent high = highest. Do not label them floor or ceiling. A one-week player is thin. Bye = 0. Out, IR, inactive = 0 and cannot start. No 2026 skill row = NO TRAIL. Cannot start, cannot be ranked as a claim, cannot be given a trade value. Gap under 1.5 is a coin-flip.
+
+B1 = B0 × (this week's pregame implied team total / mean of his own last three pregame implied totals). Shadow only. If a past total was not stored, B1 is missing. Do not fall back to the league average. Do not put B1 on the button.
+
+The 2,000-draw sample picks recent low, expected, or recent high. It is a three-point sample. Do not call it a win chance. Favorite still uses recent low. Underdog uses recent high. Toss-up uses the mean. Margin 8 and the 65/35 cuts stay, labeled heuristic.
+
+Provenance on every card: model version, weight version, freeze time, odds freeze time, injury freeze time. Missing freeze is STALE. Brain line: disabled, validation failed. No second score in the drawer. Badges only: snap share, target share, goal-line share, this week's team total versus his last three.
+
+## Waivers and trades
+
+FLEX and OP fill by raw expected points. Never by VOR.
+
+A claim's replacement is the best free agent at that position in that league's ESPN pool. Do not use QB14 × 0.55 to pick a claim. Print a 40 to 70 percent sensitivity on the old factor. If the top 10 claims do not move, say so. Until that table exists, the 55 percent factor stays labeled heuristic and off the slot fill.
+
+Rest of season does not scale his average by team total versus the league average. That double-counts his offense. Scale is this week's pregame total over his own recent pregame total, the same ratio as B1. Bye = 0. A horizon past three weeks shrinks toward the role prior: week n uses (3/n) × recent mean + ((n−3)/n) × positional mean for that role, n at least 3. Drake Maye at 179 over 14 unshrunk weeks is wrong.
+
+Trade fair band of 8 percent, and the reject when a deal thins a starter against a top-3 points team, stay as managerial rules. Label them heuristic.
+
+## Formula the brain must print, then match
+
+Shares are not regressed. Efficiency is.
+
+```
+teamPlays = pregame pace, regressed 30 percent to league pace
+targets = teamPlays * passRate(spread) * targetShare
+carries = teamPlays * rushRate(spread) * carryShare
+rzCarries = carries * rzShare
+receptions = targets * catchRate
+rushFirstDowns = carries * rushFirstDownRate
+recFirstDowns = receptions * recFirstDownRate
+passFirstDowns = completions * passFirstDownRate
+```
+
+`targetShare` and `carryShare` are his pregame shares. A missing share is null, not the position mean. Efficiency only, halfway to the position mean: yards per carry, yards per target, catch rate, completion rate, sack rate, touchdowns per touch, first-down rates. Then `scoreOffense` / `scoreDst` on those counts. A count the scorer pays and the projector leaves at 0 is a bug.
+
+Print this for Judkins and the other eight before any other model edit: team plays, pass rate, rush rate, target share, carry share, targets, carries, red-zone carries, goal-line carries, receptions, first downs, efficiency rates, Bush total. Hand-score Judkins 31.7 from the box. If the hand score disagrees, the grade file is wrong and the model is not on trial.
+
+Carry gap = (actual team rush plays − projected) × projected share, plus actual team rush plays × (actual share − projected share). The term over half the gap is script or share. If projected carries are within 15 percent of actual and points are still low, it is not volume. Subtract 6 × (actual TDs − projected TDs) from actual points. If the remainder is within 4 of the projection, the rest is touchdown variance.
+
+On the nine, actual mean is 20.5, B0 is 15.9, brain is 13.7. The brain is 2.2 low. Do not add 2.2. Split each miss into carries, targets, touchdowns, receptions, and first downs. Regrade the nine only if a share was shrunk or a paid count was dropped.
+
+## Correction
+
+`stored/weights.ts` is the only writer, and the projector reads it after restart. Every two graded weeks, grid `usageLast3` from 0.40 to 0.80 by 0.05 on season-to-date MAE. Adopt a point only if it beats the current value by at least 0.25. No one-week rollback. Until two graded weeks exist, refuse. 0.60 stays. Do not blend last-3 against the season until the player has more than three scored weeks.
+
+Tag after the game, from actual opportunities scored with pregame efficiency. If actual points and that opportunity expectation differ by more than 6, efficiency variance. If projected points and that opportunity expectation differ by more than 4, usage miss. Do not refit the cut to Metcalf.
+
+## Gate
+
+Fetch 2025 play-by-play and schedule lines if they are not on disk. Replay weeks 4–18, every skill player, priors from earlier weeks only. Tune on one half of the weeks. Test on the other half. 2026 rows confirm. They do not tune. If the fetch fails, the gate stays empty.
+
+Pre-registered challengers only: B0, B1, B2, B3. No model added after seeing the file. B2 or B3 may take the card only if the held-out half beats B0 by at least 0.25 MAE and beats B1 by at least 0.25, no single week and no single player owns the gap, and the input snapshot reproduces. Columns: ESPN id, league ids, week, game id, freeze time before kickoff, model version, weight version, snapshot id, projected counts including receptions and first downs, projected Bush points, B0, B1, actual Bush points. No handwritten rows. No edit after lock.
+
+Start/sit regret is reported, not a substitute for the MAE gate. For each non-coin-flip start: actual points of the chosen player minus the best benched alternative at that slot.
+
+Sunday week 4 is scored Monday against weeks 1–3 only, one row per player, B0 and B1 stored. That file confirms. It does not open the gate.
+
+## Done when
+
+- Judkins hand score and the nine-player component table are in the grade file.
+- Receptions and first downs are inputs to `scoreOffense`, or the missing term is named.
+- Card is B0. B1 is shadow. Labels are recent low, expected, recent high. Brain disabled.
+- Trade scale uses his own team total, not the league average. Maye is not 179 unshrunk.
+- FLEX and OP use raw points. Claim replacement is the best free agent.
+- Weight file still reads 0.60, and the grid writer exists.
+- 2025 replay is fetched or the gate file says the fetch failed. `cardUsesBrain()` is false.

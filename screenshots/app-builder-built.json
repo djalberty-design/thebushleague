@@ -1,0 +1,38 @@
+{
+  "url": "http://127.0.0.1:8081/",
+  "viewports": {
+    "desktop": {
+      "width": 1280,
+      "height": 800,
+      "status": 200,
+      "title": "Bush League OS",
+      "hasCanvas": false,
+      "bodyTextLen": 1459,
+      "bodyTextHash": "0b5d1398996b6bf35d0f3ba7c5195ae4dec935b9a3be001523370e290c461de9",
+      "bodyTextPrefix": "BUSH LEAGUE OS · LET MAYE COOK Command Keepers Draft Lineup Waiv",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-built.png"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "status": 200,
+      "title": "Bush League OS",
+      "hasCanvas": false,
+      "bodyTextLen": 1388,
+      "bodyTextHash": "7665349c80f3fdc93446869d971e9b7f0dc84ce9a683633bba5d7d4b3d2f0f64",
+      "bodyTextPrefix": "BUSH LEAGUE OS COMMAND LET MAYE COOK · WEEK 1 · SLOT 9 Command A",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-built-mobile.png"
+    }
+  },
+  "brandWarnings": [],
+  "authWarnings": [],
+  "verdictFile": "/workspace/screenshots/app-builder-built.json",
+  "divergesFromBaseline": false,
+  "baselineReasons": []
+}

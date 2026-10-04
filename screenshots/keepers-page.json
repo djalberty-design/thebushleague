@@ -1,0 +1,36 @@
+{
+  "url": "http://127.0.0.1:8080/keepers",
+  "viewports": {
+    "desktop": {
+      "width": 1280,
+      "height": 800,
+      "status": 200,
+      "title": "Bush League OS",
+      "hasCanvas": false,
+      "bodyTextLen": 5174,
+      "bodyTextHash": "a9f52a242287e61fb24de65392fd253054c0f5b5b57dbe3b931fd3662cae483c",
+      "bodyTextPrefix": "BUSH LEAGUE OS · LET MAYE COOK Command Keepers Draft Lineup Waiv",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/keepers-page.png"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "status": 200,
+      "title": "Bush League OS",
+      "hasCanvas": false,
+      "bodyTextLen": 5103,
+      "bodyTextHash": "4f2c208fb6ca7d72d93caf5c65bd3d9367b5adb02388d2a33edb09f7f60db109",
+      "bodyTextPrefix": "BUSH LEAGUE OS KEEPERS LOCKED FROM ESPN · 2 KEEPERS · COST IS TH",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/keepers-page-mobile.png"
+    }
+  },
+  "brandWarnings": [],
+  "authWarnings": [],
+  "verdictFile": "/workspace/screenshots/keepers-page.json"
+}

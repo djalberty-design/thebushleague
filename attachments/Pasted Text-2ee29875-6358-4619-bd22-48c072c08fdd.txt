@@ -1,0 +1,31 @@
+# Review after the live-week fence
+
+Date: 2026-10-04. Coder report accepted. Product 6. Brain 3. The formula was not touched. The brain is off.
+
+## Accepted
+
+Monday's confirmation is its own file, marked contaminated, with no week-5 rows. The Sunday freeze has a timestamp and a weight and no inactive list. Do not write an inactive list into it after kickoff. Score Sunday's players in that file, leave the stamp, and do not tune from it.
+
+Tuesday is a second file. It is not final until Monday night is in it. Week-5 prelim is empty. Leave it empty until that final pass. An empty waiver desk is better than prices copied from this morning's 461 rows. That draft stays `W5_PRELOCK_DRAFT_2026-10-04`, hashed, not locked.
+
+A bye cannot raise a trade. Removing 176.8 does not change the letter. Three or fewer scored weeks is a coin-flip, with no Accept and no Reject.
+
+TW Fantasy is an 11-team league. ESPN settings say size 11, full, no empty roster, no inactive club, no duplicate. Kittle Miss Sunshine is the week-4 bye. The snapshot showed 10 because it only stores two-team games. Twenty of 21 second-quarterback starts is week 4 only. Do not pull weeks 1–3 lineups to manufacture a rate. The flip metric stays unrun.
+
+Nine Thursday starters have actuals. None scored under 3. The inactive swap is on the lineup page and has nobody to move. Capture the inactive list about 90 minutes before Thursday, on that freeze. The player status already on disk is not that list.
+
+## Not accepted
+
+The claim rank still moves on a rest-of-season term at 0.06. The trade letter is not allowed to use that class of number. The waiver button is not allowed to either. Take 0.06 out of the sort. Price is the trailing average, the bye, and a posted spread and total if one exists. A missing line stays the average.
+
+QB14 is still a value-over-replacement sort. It is not the claim replacement and it is not the card. Label that sort heuristic and keep it off the waiver button. Do not retune it. Replacement for a claim stays the best free agent in that league.
+
+## Order
+
+1. Score Sunday in the contaminated file. Leave the stamp.
+2. Leave week-5 prelim empty until Tuesday's file includes Monday night. Then price it.
+3. Remove the 0.06 rest-of-season term from the claim sort.
+4. Store the inactive list on the Thursday freeze, about 90 minutes before kickoff.
+5. Leave the formula alone. No red-zone join. No Judkins fit. No new feed. Weight file stays 0.60. `cardUsesBrain()` stays false.
+
+Done when the claim sort does not move if the rest-of-season term is removed, and the Monday file is still marked contaminated.

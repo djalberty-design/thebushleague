@@ -1,0 +1,51 @@
+# Next implementation plan
+
+Date: 2026-10-04. Gemini, ChatGPT, and Claude reviewed the gate. This file is the order. The card stays the trailing average. `cardUsesBrain()` stays false. Do not open anything on a 0.15.
+
+## Settled
+
+B1, the Vegas scale on the trailing average, is DISABLED. It lost 6.31 to 6.19 on 2,076 held-out rows. It is not a bar to clear. It does not come back unless a new hypothesis is written down before the run.
+
+B2 and B3 did not pass. B2 beat B0 by 0.15. B3 beat B0 by 0.21. The bar stays 0.25. Do not lower it because 0.15 missed. A later pass by B3 validates the blend, not the brain. The card must not say the brain passed.
+
+The 0.15 is Python in `scripts/replay-2025.py`. It is not the TypeScript projector on the grade page. It does not count until parity exists. The Thursday nine remain actual 20.5, trailing 15.9, app brain 13.7.
+
+The mean of 19 full-trail quarterbacks, 27.5, is not a legal prior. Full-trail selects on health. Maye at 263 is unpublished. Do not hunt a result under 179.
+
+Judkins at 7.7 projected carries versus 17 actual is not a reason to build a new carry model. One game does not get a fit.
+
+## 1. Gate — parity, before any other model edit
+
+Port the Python replay formula into the app projector, bugs included. Red-zone null stays null. The 50-yard bonus stays 0. Same frozen inputs, same player-weeks, same scorer, same missing-value behavior, same weight 0.60.
+
+Run the 2,076 even weeks through the TypeScript projector. Parity passes only if mean absolute difference versus Python is at most 0.05 Bush points and no row differs by more than 0.25. Print the failures. Until that passes, 6.04 and 5.98 are research, not the product.
+
+Then run the Thursday nine through that same TypeScript path and store the new component table. Do not change the locked even-week file.
+
+## 2. Gate — decision count, same rows, no promotion
+
+On the 2,076 rows, count pairs where B2 and B0 disagree by more than 1.5 Bush points. Report how often, and the net actual points when they disagree. A 0.15 MAE edge that does not change lineups does not get a button. This report does not open the gate.
+
+## 3. Card — rest of season
+
+Stop publishing 263. Until a shrink weight is fit, rest of season is his own trailing mean times games remaining, bye = 0, labeled thin. No star mean.
+
+The shrink weight is fit on the unused odd weeks only: predict each quarterback's weeks 7–18 mean from his weeks 1–3 mean. The prior group is the same position and the same pregame role. It is not the players who lasted the season. Write the weight down before looking at even weeks. Even weeks stay burned for this fit.
+
+FLEX and OP stay on raw expected points. Claim replacement stays the best free agent. B0 stays on the card.
+
+## 4. Gate — one clean test, after parity
+
+Do not grid the even weeks. They were scored at 0.60. After parity, the odd weeks may be scored once, with a week-block check pre-registered: the lower bound of the paired B2-minus-B0 difference has to clear zero, and the MAE gap has to clear 0.25, and the decision count in step 2 has to be positive. If any fail, the brain stays off.
+
+Red-zone carries and the 50-yard split may be joined from files already on disk only after parity, and only as a declared second version. That version is tested on the odd weeks, not refit on the even weeks. Do not invent a missing split.
+
+## Done when
+
+- TypeScript matches Python on the 2,076 rows inside 0.05 mean and 0.25 max.
+- The decision-disagreement count is stored.
+- Maye is not 263. Rest of season is his own mean, labeled thin, until the odd-week shrink weight is written down.
+- B1 is marked disabled.
+- `cardUsesBrain()` is false.
+
+No new feed. Sunday's score uses the TypeScript path after parity, weeks 1–3 only, one row per player. It confirms. It does not open the gate.

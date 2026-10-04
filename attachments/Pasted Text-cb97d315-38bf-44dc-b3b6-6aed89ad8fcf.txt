@@ -1,0 +1,49 @@
+# Bush League OS — implementation plan
+
+Date: 2026-10-04. This file replaces `FINAL_IMPLEMENTATION_PLAN.md`. Gemini, ChatGPT, and Claude reviewed the tercile result. Where they disagreed, this file already picked.
+
+The week you start is the trailing average. The brain is off. 276 is dead. The work left is a desk that does not grade a deal on a number it disclaims, and a ledger that can admit a debut.
+
+## Production contract
+
+Bush League `1014874`, Let Maye Cook. TW Fantasy `210326445`, Utility Man. Same scorer. No kicker. No generic PPR rank.
+
+Card number is B0, the mean of the last three pregame Bush weeks. Recent low and recent high are those weeks. Gap under 1.5 is a coin-flip. Out, IR, bye, inactive score 0. NO TRAIL cannot start, be claimed, or be given a trade value. Favorite uses recent low. Underdog uses recent high. Toss-up uses the mean. Status line: BASELINE, brain disabled, validation failed. Drawer badges only. No brain points. No +4,017.
+
+B1 stays DISABLED. B2 and B3 stay SHADOW. `cardUsesBrain()` stays false. `usageLast3` stays 0.60. Do not lower the 0.25 bar. Do not join red-zone carries. Do not fit Judkins.
+
+## Trade letter
+
+176.8 stays visible, labeled THIN, NOT A FORECAST. It cannot move the letter, the season-gain line, or an accept or reject. A screen that disclaims a number and a grade that uses it is a bug.
+
+The letter uses the weekly starter delta only. Remaining games are a count of weeks he is not on bye. They do not multiply a season total into the grade. If any player in the deal has three or fewer scored weeks, stamp THIN SAMPLE and do not issue Accept or Reject. The verdict is a coin-flip advisory. FLEX and OP still fill on raw expected points. The 8 percent band stays a heuristic and does not override the thin-sample rule.
+
+Maye's week stays 13.6. 176.8 may sit beside the letter. It does not enter it.
+
+## Week-5 ledger
+
+A lock freezes the prediction, the weight, and the timestamp. It does not freeze the player list. Build the universe from the pre-kickoff slate of active skill players. A debut with no 2026 skill row is written as NO TRAIL, projected 0, ineligible to start, claim rank null, trade value null. Do not reject him against this morning's 461 names.
+
+Write the week-5 rows before Thursday's kickoff. A partial write is refused. An edit after lock is refused. Debut rows are excluded from the B0 comparison. They are still stored. The week-10 kill rule needs this ledger complete from week 5. Sunday's already stored projection is scored Monday from weeks 1–3 only. It confirms. It does not open the gate.
+
+## Shrink and flips, read-only
+
+The 24.5 prior is rejected. 276 is not published. `games / (games + 7)` is not applied. Do not substitute another prior because it prints a nicer number.
+
+Store one shadow table before any new prior is proposed. For each odd-week tercile: games-played rate, played-only mean, and the same figures for the same type of quarterback in the prior season's weeks 7–17. If played-only is still 3 or more under the prediction, the early level is non-persistent. That table does not go on the card.
+
+The flip metric does not run as a gate this build. The coder's snake of 2 QB, 5 RB, 6 WR, 2 TE is not the recipe. Read the 20 real rosters. Report how often a second quarterback is actually started, including OP. A later flip count uses that shape, plus a one-quarterback variant, and splits QB-versus-skill OP decisions from the other slots. A flip counts only above the 1.5 line. It still cannot open the gate before the week-10 kill.
+
+## Kill rule
+
+At the end of week 10, pool the forward ledger with the odd-week result. If the week-block lower bound is still not above zero, retire the brain's card ambitions and stop spending build time on it. No one-week rollback. No red-zone join. No new feed.
+
+## Done when
+
+- The trade letter does not change if 176.8 is removed.
+- A three-game player cannot receive Accept or Reject.
+- A week-5 debut is stored as NO TRAIL, not rejected.
+- Week-5 rows exist before Thursday, or the file says the slate was not available.
+- The tercile played-only table is stored and not on the card.
+- The 20-roster quarterback count is stored. The 2 QB snake is not the recipe.
+- `cardUsesBrain()` is false. Weight file is 0.60. 276 is absent.
